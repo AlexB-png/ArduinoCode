@@ -16,9 +16,9 @@ VCC = +
 
 LED:
 
-Normal = -
-Blue = Pin 3 , 220 ohm
-Green = Pin 4 , 220 ohm
-Red = Pin 5 , 220 ohm
+Normal = - \n
+Blue = Pin 3 , 220 ohm \n
+Green = Pin 4 , 220 ohm \n
+Red = Pin 5 , 220 ohm \n
 
 ![Drawing](./ultrasonic.png)
