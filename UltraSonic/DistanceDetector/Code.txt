@@ -1,0 +1,79 @@
+#include <LiquidCrystal_I2C.h>
+
+const int trigPin = 8;
+const int echoPin = 9;
+
+const int blue = 3;
+const int green = 4;
+const int red = 5;
+
+LiquidCrystal_I2C lcd(0x27, 16, 2);
+
+void setup() {
+  lcd.init();
+  lcd.backlight();
+  
+  pinMode(trigPin, OUTPUT);
+  pinMode(echoPin, INPUT);
+  Serial.begin(9600);
+
+  pinMode(blue,OUTPUT);
+  pinMode(red,OUTPUT);
+  pinMode(green,OUTPUT);
+
+  digitalWrite(red, LOW);
+  digitalWrite(green, HIGH);
+  digitalWrite(blue, LOW);
+}
+
+void loop() {
+  // Send trigger pulse
+  digitalWrite(trigPin, LOW);
+  delayMicroseconds(2);
+  digitalWrite(trigPin, HIGH);
+  delayMicroseconds(10);
+  digitalWrite(trigPin, LOW);
+
+  // Read echo time
+  long duration = pulseIn(echoPin, HIGH);
+
+  // Convert time to distance (cm)
+  float distance = duration * 0.034 / 2;
+
+  Serial.print("Distance: ");
+  Serial.print(distance);
+  Serial.println(" cm");
+
+  // Clear LCD
+  lcd.setCursor(0,0);
+  lcd.print("               ");
+
+  // Write distance to LCD (XX cm)
+  lcd.setCursor(0,0);
+  lcd.print(distance);
+  lcd.print(" cm");
+
+  if (distance <= 5) {
+    // Red LED on
+    digitalWrite(red, HIGH);
+    digitalWrite(green, LOW);
+    digitalWrite(blue, LOW);
+  } else if (distance <= 10) {
+    // Green LED on
+    digitalWrite(red, LOW);
+    digitalWrite(green, HIGH);
+    digitalWrite(blue, LOW);
+  } else if (distance <= 15) {
+    // Blue LED on
+    digitalWrite(red, LOW);
+    digitalWrite(green, LOW);
+    digitalWrite(blue, HIGH);
+  } else {
+    // No LEDS on
+    digitalWrite(red, LOW);
+    digitalWrite(green, LOW);
+    digitalWrite(blue, LOW);
+  }
+
+  delay(500);
+}
