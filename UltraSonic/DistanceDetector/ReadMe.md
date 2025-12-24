@@ -1,5 +1,6 @@
 PINS:
 
+
 Ultrasonic:
 
 TRIG = 8
@@ -10,6 +11,7 @@ VCC = +
 
 GND = -
 
+
 LCD:
 
 SDA = A4
@@ -19,6 +21,7 @@ SCL = A5
 GND = -
 
 VCC = +
+
 
 LED:
 
